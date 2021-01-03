@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,8 @@ Route::get('/hello', function () {
 Route::get('/news', function () {
     return view('news');
 });
-Route::get('/news/category',[\App\Http\Controllers\NewsController::class,'index'])->name("category.list");
-Route::get('/news/category/{id}',[\App\Http\Controllers\NewsController::class,'news'])->where('id','\d+')->name("category.news");
-Route::get('/news/news/{id}',[\App\Http\Controllers\NewsController::class,'newsInfo'])->where('id','\d+')->name("category.news.info");
+Route::group(['prefix' => 'news'], function() {
+    Route::get('/category', [NewsController::class, 'index'])->name("news.category.list");
+    Route::get('/category/{id}', [NewsController::class, 'news'])->where('id', '\d+')->name("news.category");
+    Route::get('/news/{id}', [NewsController::class, 'newsInfo'])->where('id', '\d+')->name("news.category.info");
+});

@@ -42,35 +42,24 @@ class NewsController extends Controller
         ['id' => 23, 'categoryId' => 4, 'text' => 'Категория 4. Новость 5.', 'info' => 'Категория 4. Новость 5. Подробное описание новости'],
         ['id' => 24, 'categoryId' => 4, 'text' => 'Категория 4. Новость 6.', 'info' => 'Категория 4. Новость 6. Подробное описание новости'],
     ];
-    function index(){
-        echo '<h1>Список категорий новостей</h1>';
-        foreach ($this->categories as $category){
-            $text = $category['name'];
-            $href = route('category.news',[$category['id']]);
-            echo "<a href=\"{$href}\">{$text}</a> <BR />";
-        }
-
+    function index()
+    {
+        return view('news.index', ['categories'=> $this->categories]);
     }
-    function news(int $id){
+    function news(int $id)
+    {
         $category = Arr::first($this->categories, function ($value, $key) use ($id) {return $value['id'] == $id;});
-        if($category === null){
-            echo "<h1>Категория не найдена</h1>";
-            exit();
+        $news = [];
+        if($category !== null) {
+            $news = Arr::where($this->news, function ($value, $key) use ($id) {
+                return $value['categoryId'] === $id;
+            });
         }
-        $news = Arr::where($this->news, function ($value, $key) use ($id) {return $value['categoryId'] == $id;});
-        echo "<h1>Список новостей в {$category['name']}</h1>";
-        foreach ($news as $new) {
-            $text = $new['text'];
-            $href = route('category.news.info', [$new['id']]);
-            echo "<a href=\"{$href}\">{$text}</a> <BR />";
-        }
+        return view('news.news',['category' => $category, 'news' => $news]);
     }
-    function newsInfo(int $id){
+    function newsInfo(int $id)
+    {
         $new = Arr::first($this->news, function ($value, $key) use ($id) {return $value['id'] == $id;});
-        if($new === null){
-            echo "<h1>Новость не найдена</h1>";
-            exit();
-        }
-        echo $new['info'];
+        return view('news.new',['new' => $new]);
     }
 }
