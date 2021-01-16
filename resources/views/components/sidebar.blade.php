@@ -15,6 +15,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link @if(request()->is('feedback') || request()->is('feedback/*')) active @endif" href="{{ route('feedback.create') }}">
+                    <span data-feather="file"></span>
+                    Обратная связь
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#">
                     <span data-feather="shopping-cart"></span>
                     Products

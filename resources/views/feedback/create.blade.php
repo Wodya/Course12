@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 @section('title')
-    Список новостей - @parent
+    Обратная связь - @parent
 @stop
 @section('content')
     <div>
-        <h2>Добавить новую запись</h2>
+        <h2>Создайте обращение</h2>
         <br>
-        <form method="post" action="{{ route('news.store') }}">
+        <form method="post" action="{{ route('feedback.store') }}">
             @csrf
             <div class="form-group">
                 <label for="category_id">Категория</label>
@@ -16,13 +16,17 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="email">Ваш email</label>
+                <input type="email" name="email" class="form-control" value="{{old('email')}}" id="email" required>
+            </div>
+            <div class="form-group">
                 <label for="title">Заголовок</label>
-                <input type="text" class="form-control" name="title"  value="{{ old('title') }}" id="title">
+                <input type="text" class="form-control" name="title"  value="{{ old('title') }}" id="title" required>
             </div>
 
             <div class="form-group">
                 <label for="description">Текст</label>
-                <textarea class="form-control" name="description" id="description">{!! old('description') !!}</textarea>
+                <textarea class="form-control" name="description" id="description" required>{!! old('description') !!}</textarea>
             </div>
 
             <br><button type="submit" class="btn btn-success">Сохранить</button>
