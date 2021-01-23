@@ -24,3 +24,4 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 Route::resource('/feedback', \App\Http\Controllers\FeedbackController::class);
+Route::resource('/newsSources', \App\Http\Controllers\Admin\NewsSourceController::class);

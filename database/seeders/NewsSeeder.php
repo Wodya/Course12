@@ -27,6 +27,7 @@ class NewsSeeder extends Seeder
 			$title = $faker->sentence(mt_rand(3,10));
 			$data[] = [
 				'category_id' => 2,
+                'source_id' => random_int(1,5),
 				'title'  => $title,
 				'slug'   => \Str::slug($title),
 				'description' => $faker->realText(mt_rand(100,200)),
