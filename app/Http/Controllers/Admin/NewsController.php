@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -10,13 +12,16 @@ class NewsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
 		$status = 1;
+		$news = News::with('category')->paginate(10);
+
+
 		return view('admin.news.index', [
-			'news' => $this->news,
+			'newsList' => $news,
 			'status'   => $status
 		]);
     }
@@ -28,7 +33,8 @@ class NewsController extends Controller
      */
     public function create()
     {
-		return view('admin.news.create');
+    	$categories = Category::select(['id', 'title'])->get();;
+		return view('admin.news.create', ['categories' => $categories]);
     }
 
     /**
@@ -44,26 +50,17 @@ class NewsController extends Controller
 		]);
 
         $data = $request->except('_token');
-		$saveFile = function(array $data) {
-			$responseData = [];
-			$fileNews = storage_path('app/news.txt');
-			if(file_exists($fileNews)) {
-				$file = file_get_contents($fileNews);
-				$response = json_decode($file, true);
-			}
+        $data['slug'] = \Str::slug($data['title']);
+
+        //add in db
+		$news = News::create($data);
+		if($news) {
+			return redirect()->route('news.index')
+				 ->with('success', 'Новость была длбавлена');
+		}
 
 
-			$responseData[] = $data;
-			if(isset($response) && !empty($response)) {
-				$r = array_merge($response, $responseData);
-			}else {
-				$r = $responseData;
-			}
-			file_put_contents($fileNews, json_encode($r));
-		};
-
-		$saveFile($data);
-        return redirect()->route('news.index');
+        return back()->withInput();
     }
 
     /**
@@ -81,33 +78,56 @@ class NewsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(int $id)
     {
-		return view('admin.news.edit');
+    	$news = News::findOrFail($id);
+    	$categories = Category::select(['id', 'title'])->get();
+
+		return view('admin.news.edit', [
+			'categories' => $categories,
+			'news' => $news
+		]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, int $id)
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param \Illuminate\Http\Request $request
+	 * @param News $news
+	 * @return \Illuminate\Http\Response
+	 */
+    public function update(Request $request, News $news)
     {
-        //
+		$request->validate([
+			'title' => 'required|string|min:3'
+		]);
+
+		$data = $request->only('cateegory_id', 'title', 'description');
+		$data['slug'] = \Str::slug($data['title']);
+
+		$status = $news->fill($data)->save();
+
+		if($status) {
+			return redirect()->route('news.index')
+				->with('success', 'Новость была обновлена');
+		}
+
+		return back();
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param News $news
+	 * @return \Illuminate\Http\Response
+	 * @throws \Exception
+	 */
+    public function destroy(News $news)
     {
-        //
+        $news->delete();
+        return response()->json(['status' => 'ok']);
     }
 }

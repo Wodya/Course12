@@ -11,8 +11,9 @@
             <div class="form-group">
                 <label for="category_id">Категория</label>
                 <select class="form-control" name="category_id" id="category_id">
-                    <option value="1">Категория 1</option>
-                    <option value="2">Категория 2</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->title }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="form-group">
