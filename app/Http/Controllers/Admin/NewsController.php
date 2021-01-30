@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRequest;
+use App\Http\Requests\UpdateRequest;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class NewsController extends Controller
 {
@@ -29,7 +32,7 @@ class NewsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
@@ -37,30 +40,25 @@ class NewsController extends Controller
 		return view('admin.news.create', ['categories' => $categories]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param StoreRequest $request
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+    public function store(StoreRequest $request)
     {
-    	$request->validate([
-    		'title' => 'required|string|min:3'
-		]);
+    	$data = $request->validated();
+    	$data['slug'] = \Str::slug($data['title']);
 
-        $data = $request->except('_token');
-        $data['slug'] = \Str::slug($data['title']);
-
-        //add in db
+    	//add in db
 		$news = News::create($data);
-		if($news) {
+		if ($news) {
 			return redirect()->route('news.index')
-				 ->with('success', 'Новость была длбавлена');
+				   ->with('success', __('messages.admin.news.create.success'));
 		}
 
-
-        return back()->withInput();
+		return back()->withInput()->with('fail', __('messages.admin.news.create.fail'));
     }
 
     /**
@@ -96,25 +94,21 @@ class NewsController extends Controller
 	 *
 	 * @param \Illuminate\Http\Request $request
 	 * @param News $news
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
-    public function update(Request $request, News $news)
+    public function update(UpdateRequest $request, News $news)
     {
-		$request->validate([
-			'title' => 'required|string|min:3'
-		]);
-
-		$data = $request->only('cateegory_id', 'title', 'description');
+		$data = $request->validated();
 		$data['slug'] = \Str::slug($data['title']);
 
 		$status = $news->fill($data)->save();
 
 		if($status) {
 			return redirect()->route('news.index')
-				->with('success', 'Новость была обновлена');
+				->with('success', __('messages.admin.news.edit.success'));
 		}
 
-		return back();
+		return back()->withInput();
 
     }
 
