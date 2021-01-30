@@ -15,7 +15,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link @if(request()->is('feedback') || request()->is('feedback/*')) active @endif" href="{{ route('feedback.create') }}">
+                <a class="nav-link @if(request()->is('feedback') || request()->is('feedback/*')) active @endif" href="{{ route('feedback.index') }}">
                     <span data-feather="file"></span>
                     Обратная связь
                 </a>

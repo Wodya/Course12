@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FeedbackStoreRequest;
+use App\Http\Requests\FeedbackUpdateRequest;
 use App\Models\Feedback;
 use App\Models\FeedbackCategory;
 use Illuminate\Http\Request;
@@ -19,9 +21,9 @@ class FeedbackController extends Controller
         $categories = FeedbackCategory::select(['id', 'name'])->get();;
         return view('feedback.create',['categories' => $categories]);
     }
-    public function store(Request $request)
+    public function store(FeedbackStoreRequest $request)
     {
-        $data = $request->except('_token');
+        $data = $request->validated();
         $feedback = Feedback::create($data);
         if($feedback) {
             return redirect()->route('feedback.index')->with('success', 'Обращение создано');
@@ -57,9 +59,9 @@ class FeedbackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Feedback $feedback)
+    public function update(FeedbackUpdateRequest $request, Feedback $feedback)
     {
-        $data = $request->except('_token');
+        $data = $request->validated();
         $status = $feedback->fill($data)->save();
 
         if($status) {

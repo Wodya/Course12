@@ -17,25 +17,30 @@
                         <option value="{{ $category->id }}" @if($category->id == $feedback->feedback_category_id) selected @endif>{{ $category->name }}</option>
                     @endforeach
                 </select>
+                @error('feedback_category_id') <div class="alert alert-danger">{{$message}}</div> @enderror
             </div>
             <div class="form-group">
                 <label for="email">Ваш email</label>
-                <input type="email" name="email" class="form-control" value="{{$feedback->email}}" id="email" required>
+                <input type="text" name="email" class="form-control" value="{{$feedback->email}}" id="email" >
+                @error('email') <div class="alert alert-danger">{{$message}}</div> @enderror
             </div>
             <div class="form-group">
                 <label for="client_name">Ваше имя</label>
-                <input type="text" name="client_name" class="form-control" value="{{$feedback->client_name}}" id="client_name" required>
+                <input type="text" name="client_name" class="form-control" value="{{$feedback->client_name}}" id="client_name" >
+                @error('client_name') <div class="alert alert-danger">{{$message}}</div> @enderror
             </div>
             <div class="form-group">
                 <label for="title">Заголовок</label>
-                <input type="text" class="form-control" name="subject"  value="{{ $feedback->subject }}" id="title" required>
+                <input type="text" class="form-control" name="subject"  value="{{ $feedback->subject }}" id="title" >
+                @error('subject') <div class="alert alert-danger">{{$message}}</div> @enderror
             </div>
             <div class="form-group">
                 <label for="body">Текст</label>
-                <textarea class="form-control" name="body" id="body" required>{!! $feedback->body !!}</textarea>
+                <textarea class="form-control" name="body" id="body" >{!! $feedback->body !!}</textarea>
+                @error('body') <div class="alert alert-danger">{{$message}}</div> @enderror
             </div>
 
-            <br><button type="submit" class="btn btn-success">Сохранить</button>
+            <br><button type="submit" class="btn btn-success" name="save">Сохранить</button>
         </form>
 
     </div>
