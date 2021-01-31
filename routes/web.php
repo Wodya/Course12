@@ -38,5 +38,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('admin.dashboard');
         Route::resource('/news', \App\Http\Controllers\Admin\NewsController::class);
+        Route::resource('/userProfile', \App\Http\Controllers\Admin\UserProfileController::class);
     });
 });

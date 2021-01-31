@@ -21,27 +21,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="shopping-cart"></span>
-                    Products
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="users"></span>
-                    Customers
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="bar-chart-2"></span>
-                    Reports
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="layers"></span>
-                    Integrations
+                <a class="nav-link @if(request()->is('admin/userProfile') || request()->is('userProfile/*')) active @endif" href="{{ route('userProfile.index') }}">
+                    <span data-feather="file"></span>
+                    Профили пользователей
                 </a>
             </li>
         </ul>
