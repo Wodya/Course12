@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Service\AuthService;
+use App\Service\NewsService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,6 +18,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind( AuthService::class,function (){
             return new AuthService();
+        });
+        $this->app->bind( NewsService::class,function (){
+            return new NewsService();
         });
     }
 

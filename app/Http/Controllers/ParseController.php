@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Service\NewsService;
 use Illuminate\Http\Request;
 use Orchestra\Parser\Xml\Facade as XmlParser;
 
@@ -18,5 +19,10 @@ class ParseController extends Controller
             'news' => ['uses' => 'channel.item[title,link,guid,description,pubDate]'],
         ]);
         dd($data);
+    }
+    public function update_news(NewsService $service)
+    {
+        $service->UpdateNews();
+        return redirect()->route('news.index');
     }
 }

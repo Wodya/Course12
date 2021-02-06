@@ -10,6 +10,8 @@
             <div class="alert alert-success">{{ session()->get('success') }}</div>
         @endif
         <a href="{{ route('news.create') }}">Добавить новость</a>
+        &nbsp;
+        <a href="{{ route('update_news') }}">Обновить новости из Rss</a>
         <br><br>
      <table class="table table-bordered">
          <thead>

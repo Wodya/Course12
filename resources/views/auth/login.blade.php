@@ -47,8 +47,10 @@
                                     <label class="form-check-label" for="remember">
                                         {{ __('Запомнить меня') }}
                                     </label>
-                                    &nbsp;
+                                    <BR>&nbsp;
                                     <a href="{{route('vk.redirect')}}">Войти через VK</a>
+                                    &nbsp;
+                                    <a href="{{route('facebook.redirect')}}">Войти через Facebook</a>
                                 </div>
                             </div>
                         </div>

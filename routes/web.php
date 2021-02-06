@@ -42,6 +42,10 @@ Route::group(['middleware' => 'auth'], function() {
     });
 });
 Route::get('/parser',[\App\Http\Controllers\ParseController::class,'index']);
+Route::get('/parser/update_news',[\App\Http\Controllers\ParseController::class,'update_news'])->name('update_news');
+
 Route::get('/auth/vk/redirect',[\App\Http\Controllers\SocialController::class,'redirect'])->name('vk.redirect');
 Route::get('/auth/vk/callback',[\App\Http\Controllers\SocialController::class,'callback'])->name('vk.callback');
 
+Route::get('/auth/facebook/redirect',[\App\Http\Controllers\SocailFacebookController::class,'redirect'])->name('facebook.redirect');
+Route::get('/auth/facebook/callback',[\App\Http\Controllers\SocailFacebookController::class,'callback'])->name('facebook.callback');
