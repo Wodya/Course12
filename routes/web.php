@@ -41,3 +41,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::resource('/userProfile', \App\Http\Controllers\Admin\UserProfileController::class);
     });
 });
+Route::get('/parser',[\App\Http\Controllers\ParseController::class,'index']);
+Route::get('/auth/vk/redirect',[\App\Http\Controllers\SocialController::class,'redirect'])->name('vk.redirect');
+Route::get('/auth/vk/callback',[\App\Http\Controllers\SocialController::class,'callback'])->name('vk.callback');
+

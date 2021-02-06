@@ -47,6 +47,8 @@
                                     <label class="form-check-label" for="remember">
                                         {{ __('Запомнить меня') }}
                                     </label>
+                                    &nbsp;
+                                    <a href="{{route('vk.redirect')}}">Войти через VK</a>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +61,7 @@
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Забыли пароля?') }}
+                                        {{ __('Забыли пароль?') }}
                                     </a>
                                 @endif
                             </div>
