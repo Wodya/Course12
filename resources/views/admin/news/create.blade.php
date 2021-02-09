@@ -15,7 +15,7 @@
         @endif
         <h2>Добавить новую запись</h2>
         <br>
-        <form method="post" action="{{ route('news.store') }}">
+        <form method="post" action="{{ route('news.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="category_id">Категория</label>
@@ -30,7 +30,11 @@
                 <input type="text" class="form-control" name="title"  value="{{ old('title') }}" id="title">
                 @error('title') <div class="alert alert-danger">{{ $message }}</div> @enderror
             </div>
-
+            <div class="form-group">
+                <label for="image">Изображение</label>
+                <input type="file" class="form-control" name="image"  value="{{ old('image') }}" id="image">
+                @error('image') <div class="alert alert-danger">{{ $message }}</div> @enderror
+            </div>
             <div class="form-group">
                 <label for="description">Текст</label>
                 <textarea class="form-control" name="description" id="description">{!! old('description') !!}</textarea>
@@ -43,7 +47,18 @@
     </div>
 @stop
 @push('js')
+    <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>
     <script type="text/javascript">
-        // alert("Hello world");
+        document.addEventListener("DOMContentLoaded", function () {
+            ClassicEditor
+                .create( document.querySelector( '#description' ), {
+                    height: 200
+                })
+                .catch( error => {
+                    console.error( error );
+                } );
+        });
+
+
     </script>
 @endpush

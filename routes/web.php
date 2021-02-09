@@ -41,8 +41,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::resource('/userProfile', \App\Http\Controllers\Admin\UserProfileController::class);
     });
 });
-Route::get('/parser',[\App\Http\Controllers\ParseController::class,'index']);
-Route::get('/parser/update_news',[\App\Http\Controllers\ParseController::class,'update_news'])->name('update_news');
+Route::get('/parser',[\App\Http\Controllers\ParserController::class,'index']);
+Route::get('/parser/update_news',[\App\Http\Controllers\ParserController::class,'update_news'])->name('update_news');
 
 Route::get('/auth/vk/redirect',[\App\Http\Controllers\SocialController::class,'redirect'])->name('vk.redirect');
 Route::get('/auth/vk/callback',[\App\Http\Controllers\SocialController::class,'callback'])->name('vk.callback');

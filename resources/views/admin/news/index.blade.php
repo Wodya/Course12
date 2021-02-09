@@ -20,6 +20,7 @@
              <th>Категория</th>
              <th>Новость</th>
              <th>Дата обновления</th>
+             <th>Изображение</th>
              <th>Управление</th>
          </tr>
          </thead>
@@ -30,6 +31,7 @@
             <td>{{ $news->category->title }}</td>
             <td>{{ $news->title }}</td>
             <td>{{ $news->updated_at->format('d-m-Y H:i:s') }} </td>
+            <td><img src="{{\Storage::url($news->image)}}" style="width: 150px;"></td>
             <td><a href="{{ route('news.edit', ['news' => $news]) }}" >Ред.</a>
             &nbsp; <a href="javascript:;" class="deleteData" rel="{{ $news->id }}">Удл.</a></td>
         </tr>

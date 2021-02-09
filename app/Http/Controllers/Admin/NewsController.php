@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateRequest;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class NewsController extends Controller
@@ -50,7 +51,14 @@ class NewsController extends Controller
     {
     	$data = $request->validated();
     	$data['slug'] = \Str::slug($data['title']);
+        if($request->hasFile('image')) {
+            $file = $request->file('image');
+            $ext = $file->getClientOriginalExtension();
+            $name = Str::random(8);
 
+            $path = $file->storeAs('news', $name. "." . $ext);
+            $data['image'] = $path;
+        }
     	//add in db
 		$news = News::create($data);
 		if ($news) {

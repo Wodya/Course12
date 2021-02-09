@@ -1,9 +1,6 @@
 <?php
 
-
 namespace App\Service;
-
-
 use App\Models\News;
 use Illuminate\Support\Str;
 use Orchestra\Parser\Xml\Facade as XmlParser;

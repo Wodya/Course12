@@ -12,7 +12,7 @@ class News extends Model
     protected $table = "news";
     protected $primaryKey = "id";
 
-    protected $fillable = ['category_id', 'title', 'slug', 'image', 'description'];
+    protected $fillable = ['category_id','source_id', 'title', 'slug', 'image', 'description'];
    //protected $guarded = ['id'];
 
 	public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
