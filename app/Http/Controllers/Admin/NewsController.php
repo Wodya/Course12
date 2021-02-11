@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRequest;
 use App\Http\Requests\UpdateRequest;
+use App\Jobs\JobNewsParsing;
 use App\Models\Category;
 use App\Models\News;
+use App\Service\ParsingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -137,4 +139,5 @@ class NewsController extends Controller
         $news->delete();
         return response()->json(['status' => 'ok']);
     }
+
 }

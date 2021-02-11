@@ -21,6 +21,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link @if(request()->is('resource') || request()->is('resource/*')) active @endif" href="{{ route('resource.index') }}">
+                    <span data-feather="file"></span>
+                    Ресурсы обновления
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link @if(request()->is('admin/userProfile') || request()->is('userProfile/*')) active @endif" href="{{ route('userProfile.index') }}">
                     <span data-feather="file"></span>
                     Профили пользователей

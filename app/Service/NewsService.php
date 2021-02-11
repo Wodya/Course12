@@ -2,14 +2,15 @@
 
 namespace App\Service;
 use App\Models\News;
+use App\Models\Resource;
 use Illuminate\Support\Str;
 use Orchestra\Parser\Xml\Facade as XmlParser;
 
 class NewsService
 {
-    public function UpdateNews()
+    private function UpdateNews($url)
     {
-        $xml = XmlParser::load("https://yandex.ru/company/press_releases/news.rss");
+        $xml = XmlParser::load($url);
         $data = $xml->parse([
             'title' => ['uses' => 'channel.title'],
             'link' => ['uses' => 'channel.link'],
@@ -29,6 +30,13 @@ class NewsService
             $news->description = $item['description'];
             $news->guid = $item['guid'];
             $news->save();
+        }
+    }
+    public function updateDbNews() :void
+    {
+        $resources = Resource::all();
+        foreach ($resources as $resource){
+            $this->UpdateNews($resource['url']);
         }
     }
 }

@@ -39,10 +39,11 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('admin.dashboard');
         Route::resource('/news', \App\Http\Controllers\Admin\NewsController::class);
         Route::resource('/userProfile', \App\Http\Controllers\Admin\UserProfileController::class);
+        Route::resource('/resource', \App\Http\Controllers\Admin\ResourceController::class);
+        Route::get('/resource/update_news', [\App\Http\Controllers\Admin\ResourceController::class, 'update_news'])->name('update_news');
     });
 });
 Route::get('/parser',[\App\Http\Controllers\ParserController::class,'index']);
-Route::get('/parser/update_news',[\App\Http\Controllers\ParserController::class,'update_news'])->name('update_news');
 
 Route::get('/auth/vk/redirect',[\App\Http\Controllers\SocialController::class,'redirect'])->name('vk.redirect');
 Route::get('/auth/vk/callback',[\App\Http\Controllers\SocialController::class,'callback'])->name('vk.callback');

@@ -1,5 +1,6 @@
 <?php
 namespace App\Service;
+use App\Models\Resource;
 use Orchestra\Parser\Xml\Facade as XmlParser;
 use Illuminate\Support\Str;
 
