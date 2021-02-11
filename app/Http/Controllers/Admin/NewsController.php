@@ -75,10 +75,15 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
+    public function show(News $news)
     {
-        //
-    }
+        $key = 'views-' . \Auth::user()->id . "-" . $news->id;
+        if(!session()->has($key)) {
+            $news->views = intval($news->views+1);
+            $news->save();
+            session([$key => true]);
+        }
+        return view('admin.news.show', ['news' => $news]);    }
 
     /**
      * Show the form for editing the specified resource.

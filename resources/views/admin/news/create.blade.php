@@ -3,6 +3,7 @@
     Список новостей - @parent
 @stop
 @section('content')
+
     <div><br>
         @if($errors->any())
             <div class="alert alert-danger">
@@ -47,18 +48,37 @@
     </div>
 @stop
 @push('js')
-    <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>
+        <script src="{{ asset('resource/js/ckedit_include.js') }}" type="module" ></script>
+{{--    <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>--}}
+    <script type="module">
+        import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+        import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
+        import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+        import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
+        import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
+    </script>
     <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function () {
-            ClassicEditor
-                .create( document.querySelector( '#description' ), {
-                    height: 200
-                })
-                .catch( error => {
-                    console.error( error );
-                } );
-        });
 
+        // document.addEventListener("DOMContentLoaded", function () {
+        //     ClassicEditor
+        //         .create( document.querySelector( '#description' ), {
+        //             height: 200
+        //         })
+        //         .catch( error => {
+        //             console.error( error );
+        //         } );
+        // });
+        ClassicEditor
+            .create( document.querySelector( '#description' ), {
+                plugins: [ Essentials, Paragraph, Bold, Italic ],
+                toolbar: [ 'bold', 'italic' ]
+            } )
+            .then( editor => {
+                console.log( 'Editor was initialized', editor );
+            } )
+            .catch( error => {
+                console.error( error.stack );
+            } );
 
     </script>
 @endpush

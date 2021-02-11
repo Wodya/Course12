@@ -1,3 +1,0 @@
-Запуск тестов. В терминале в PhpStorm:
-php artisan test
-
