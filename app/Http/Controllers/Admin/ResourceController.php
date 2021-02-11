@@ -115,9 +115,10 @@ class ResourceController extends Controller
         $resource->delete();
         return response()->json(['status' => 'ok']);
     }
-    public function update_news()
+    public function update_news(NewsService $service)
     {
-       JobNewsParsing::dispatch(new NewsService());
+//        dd('update_news');
+        $service->updateDbNews();
         return redirect()->route('resource.index')->with('success', 'Обновление запущено');
     }
 }

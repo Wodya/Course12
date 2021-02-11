@@ -40,7 +40,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::resource('/news', \App\Http\Controllers\Admin\NewsController::class);
         Route::resource('/userProfile', \App\Http\Controllers\Admin\UserProfileController::class);
         Route::resource('/resource', \App\Http\Controllers\Admin\ResourceController::class);
-        Route::get('/resource/update_news', [\App\Http\Controllers\Admin\ResourceController::class, 'update_news'])->name('update_news');
+        Route::get('/update_news', [\App\Http\Controllers\Admin\ResourceController::class, 'update_news'])->name('update_news');
     });
 });
 Route::get('/parser',[\App\Http\Controllers\ParserController::class,'index']);

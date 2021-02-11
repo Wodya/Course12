@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Service\NewsService;
+use App\Service\NewsUpdateService;
 use App\Service\ParsingService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -19,9 +21,9 @@ class JobNewsParsing implements ShouldQueue
 	/**
 	 * Create a new job instance.
 	 *
-	 * @param ParsingService $service
+	 * @param NewsUpdateService $service
 	 */
-    public function __construct(ParsingService $service)
+    public function __construct(NewsUpdateService $service)
     {
         $this->service = $service;
     }
@@ -33,6 +35,6 @@ class JobNewsParsing implements ShouldQueue
      */
     public function handle()
     {
-		$this->service->saveData();
+		$this->service->UpdateNews();
     }
 }
