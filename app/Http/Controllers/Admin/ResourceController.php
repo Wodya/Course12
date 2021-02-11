@@ -119,6 +119,6 @@ class ResourceController extends Controller
     {
 //        dd('update_news');
         $service->updateDbNews();
-        return redirect()->route('resource.index')->with('success', 'Обновление запущено');
+        return redirect()->route('news.index')->with('success', 'Обновление запущено');
     }
 }
